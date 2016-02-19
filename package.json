@@ -1,0 +1,33 @@
+{
+  "name": "macaca-adb",
+  "version": "0.1.0",
+  "description": "macaca adb",
+  "keywords": [
+    "macaca-adb"
+  ],
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/macacajs/macaca-adb.git"
+  },
+  "dependencies": {
+    "co": "^4.6.0",
+    "macaca-utils": "^0.1.6",
+    "reliable-logger": "~1.0.6"
+  },
+  "devDependencies": {
+    "co-mocha": "~1.1.2",
+    "istanbul": "*",
+    "jshint": "*",
+    "pre-commit": "1.1.1",
+    "should": "~8.0.2"
+  },
+  "scripts": {
+    "test": "make test",
+    "jshint": "make jshint"
+  },
+  "pre-commit": [
+    "jshint"
+  ],
+  "license": "MIT"
+}
