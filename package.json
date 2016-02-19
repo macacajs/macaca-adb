@@ -20,7 +20,8 @@
     "istanbul": "*",
     "jshint": "*",
     "pre-commit": "1.1.1",
-    "should": "~8.0.2"
+    "should": "~8.0.2",
+    "unlock-apk": "^0.1.10"
   },
   "scripts": {
     "test": "make test",

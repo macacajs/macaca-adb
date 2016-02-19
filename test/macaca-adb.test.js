@@ -14,6 +14,7 @@
 'use strict';
 
 var ADB = require('..');
+var testApk = require('unlock-apk').apkPath;
 
 describe('macaca-adb.test.js', function() {
 
@@ -213,7 +214,7 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.install('./xxx.apk', (err, data) => {
+      adb.install(testApk, (err, data) => {
         if (err) {
           console.log(err);
           done();
@@ -236,7 +237,7 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.install('./xxx.apk').then((err, data) => {
+      adb.install(testApk).then((err, data) => {
         if (err) {
           console.log(err);
           done();
@@ -257,7 +258,7 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.forceStop('xxxxxxx', (err, data) => {
+      adb.forceStop('xdf.android_unlock', (err, data) => {
         if (err) {
           console.log(err);
           done();
@@ -280,7 +281,7 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.forceStop('xxxxxxx').then((err, data) => {
+      adb.forceStop('xdf.android_unlock').then((err, data) => {
         if (err) {
           console.log(err);
           done();
@@ -301,7 +302,7 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.clear('xxxxxxx', (err, data) => {
+      adb.clear('xdf.android_unlock', (err, data) => {
         if (err) {
           console.log(err);
           done();
@@ -324,7 +325,7 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.clear('xxxxxxx').then((err, data) => {
+      adb.clear('xdf.android_unlock').then((err, data) => {
         if (err) {
           console.log(err);
           done();
@@ -345,7 +346,7 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.unInstall('xxxxxxx', (err, data) => {
+      adb.unInstall('xdf.android_unlock', (err, data) => {
         if (err) {
           console.log(err);
           done();
@@ -368,7 +369,7 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.unInstall('xxxxxxx').then((err, data) => {
+      adb.unInstall('xdf.android_unlock').then((err, data) => {
         if (err) {
           console.log(err);
           done();
