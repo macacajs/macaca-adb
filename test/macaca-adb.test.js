@@ -564,4 +564,29 @@ describe('macaca-adb.test.js', function() {
       done();
     }
   });
+
+  it('getApkMainifest callback', function(done) {
+    ADB.getApkMainifest(testApk, function(err, data) {
+      if (err) {
+        console.log(err);
+        done();
+        return;
+      }
+      data.should.be.a.String;
+      console.log(data);
+      done();
+    });
+  });
+
+  it('getApkMainifest promise', function(done) {
+    ADB.getApkMainifest(testApk).then(function(data) {
+      data.should.be.a.String;
+      console.log(data);
+      done();
+    }).catch(function(err) {
+      console.log(err);
+      done();
+    });
+  });
+
 });
