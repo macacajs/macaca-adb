@@ -16,6 +16,8 @@
 var ADB = require('..');
 var testApk = require('unlock-apk').apkPath;
 
+var tmpDir = '/data/local/tmp';
+
 describe('macaca-adb.test.js', function() {
 
   it('getVersion callback', function(done) {
@@ -134,7 +136,7 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.push('./README.md', '/data', (err, data) => {
+      adb.push('./README.md', tmpDir, (err, data) => {
         if (err) {
           console.log(err);
           done();
@@ -155,7 +157,7 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.push('./README.md', '/data').then((err, data) => {
+      adb.push('./README.md', tmpDir).then((err, data) => {
         if (err) {
           console.log(err);
           done();
@@ -174,7 +176,7 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.pull('/data/README.md', './test', (err, data) => {
+      adb.pull(`${tmpDir}/README.md`, './test', (err, data) => {
         if (err) {
           console.log(err);
           done();
@@ -195,7 +197,7 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.pull('/data/README.md', './test').then((err, data) => {
+      adb.pull(`${tmpDir}/README.md`, './test').then((err, data) => {
         if (err) {
           console.log(err);
           done();
