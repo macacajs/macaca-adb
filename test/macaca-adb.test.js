@@ -591,4 +591,50 @@ describe('macaca-adb.test.js', function() {
     });
   });
 
+  var processName = 'com.sina.weibo';
+
+  it('killProcess callback', function *(done) {
+    var adb = new ADB();
+    var devices = yield ADB.getDevices();
+
+    if (devices.length) {
+      var device = devices[0];
+      adb.setDeviceId(device.udid);
+      adb.killProcess(processName ,(err, data) => {
+        if (err) {
+          console.log(err);
+          done();
+          return;
+        }
+        console.log(data);
+        done();
+      }).catch(function() {
+        done();
+      });
+    } else {
+      done();
+    }
+  });
+
+  it('killProcess promise', function *(done) {
+    var adb = new ADB();
+    var devices = yield ADB.getDevices();
+
+    if (devices.length) {
+      var device = devices[0];
+      adb.setDeviceId(device.udid);
+      adb.killProcess(processName).then((err, data) => {
+        if (err) {
+          console.log(err);
+          done();
+          return;
+        }
+        done();
+      }).catch(function() {
+        done();
+      });
+    } else {
+      done();
+    }
+  });
 });
