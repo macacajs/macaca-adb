@@ -14,6 +14,10 @@
 'use strict';
 
 var ADB = require('..');
+var testApk = require('unlock-apk');
+var testApkPath = testApk.apkPath;
+
+var tmpDir = '/data/local/tmp';
 
 describe('macaca-adb.test.js', function() {
 
@@ -133,7 +137,7 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.push('./README.md', '/data', (err, data) => {
+      adb.push('./README.md', tmpDir, (err, data) => {
         if (err) {
           console.log(err);
           done();
@@ -154,7 +158,7 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.push('./README.md', '/data').then((err, data) => {
+      adb.push('./README.md', tmpDir).then((err, data) => {
         if (err) {
           console.log(err);
           done();
@@ -173,7 +177,7 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.pull('/data/README.md', './test', (err, data) => {
+      adb.pull(`${tmpDir}/README.md`, './test', (err, data) => {
         if (err) {
           console.log(err);
           done();
@@ -194,7 +198,7 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.pull('/data/README.md', './test').then((err, data) => {
+      adb.pull(`${tmpDir}/README.md`, './test').then((err, data) => {
         if (err) {
           console.log(err);
           done();
@@ -213,7 +217,7 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.install('./xxx.apk', (err, data) => {
+      adb.install(testApkPath, (err, data) => {
         if (err) {
           console.log(err);
           done();
@@ -236,7 +240,7 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.install('./xxx.apk').then((err, data) => {
+      adb.install(testApkPath).then((err, data) => {
         if (err) {
           console.log(err);
           done();
@@ -257,7 +261,7 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.forceStop('xxxxxxx', (err, data) => {
+      adb.forceStop('xdf.android_unlock', (err, data) => {
         if (err) {
           console.log(err);
           done();
@@ -280,7 +284,7 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.forceStop('xxxxxxx').then((err, data) => {
+      adb.forceStop('xdf.android_unlock').then((err, data) => {
         if (err) {
           console.log(err);
           done();
@@ -301,7 +305,7 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.clear('xxxxxxx', (err, data) => {
+      adb.clear('xdf.android_unlock', (err, data) => {
         if (err) {
           console.log(err);
           done();
@@ -324,7 +328,7 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.clear('xxxxxxx').then((err, data) => {
+      adb.clear('xdf.android_unlock').then((err, data) => {
         if (err) {
           console.log(err);
           done();
@@ -345,7 +349,7 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.unInstall('xxxxxxx', (err, data) => {
+      adb.unInstall('xdf.android_unlock', (err, data) => {
         if (err) {
           console.log(err);
           done();
@@ -368,7 +372,7 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.unInstall('xxxxxxx').then((err, data) => {
+      adb.unInstall('xdf.android_unlock').then((err, data) => {
         if (err) {
           console.log(err);
           done();
@@ -563,4 +567,256 @@ describe('macaca-adb.test.js', function() {
       done();
     }
   });
+
+  it('getApkMainifest callback', function(done) {
+    ADB.getApkMainifest(testApkPath, function(err, data) {
+      if (err) {
+        console.log(err);
+        done();
+        return;
+      }
+      data.should.be.a.String;
+      console.log(data);
+      done();
+    });
+  });
+
+  it('getApkMainifest promise', function(done) {
+    ADB.getApkMainifest(testApkPath).then(function(data) {
+      data.should.be.a.String;
+      console.log(data);
+      done();
+    }).catch(function(err) {
+      console.log(err);
+      done();
+    });
+  });
+
+  var processName = 'com.sina.weibo';
+
+  it('killProcess callback', function *(done) {
+    var adb = new ADB();
+    var devices = yield ADB.getDevices();
+
+    if (devices.length) {
+      var device = devices[0];
+      adb.setDeviceId(device.udid);
+      adb.killProcess(processName ,(err, data) => {
+        if (err) {
+          console.log(err);
+          done();
+          return;
+        }
+        console.log(data);
+        done();
+      }).catch(function() {
+        done();
+      });
+    } else {
+      done();
+    }
+  });
+
+  it('killProcess promise', function *(done) {
+    var adb = new ADB();
+    var devices = yield ADB.getDevices();
+
+    if (devices.length) {
+      var device = devices[0];
+      adb.setDeviceId(device.udid);
+      adb.killProcess(processName).then((err, data) => {
+        if (err) {
+          console.log(err);
+          done();
+          return;
+        }
+        done();
+      }).catch(function() {
+        done();
+      });
+    } else {
+      done();
+    }
+  });
+
+  it('dumpsysWindow callback', function *(done) {
+    var adb = new ADB();
+    var devices = yield ADB.getDevices();
+    if (devices.length) {
+      var device = devices[0];
+      adb.setDeviceId(device.udid);
+      adb.dumpsysWindow((err, data) => {
+        if (err) {
+          console.log(err);
+          done();
+          return;
+        }
+        console.log(data);
+        done();
+      }).catch(function() {
+        done();
+      });
+    } else {
+      done();
+    }
+  });
+
+  it('dumpsysWindow promise', function *(done) {
+    var adb = new ADB();
+    var devices = yield ADB.getDevices();
+
+    if (devices.length) {
+      var device = devices[0];
+      adb.setDeviceId(device.udid);
+      adb.dumpsysWindow().then((err, data) => {
+        if (err) {
+          console.log(err);
+          done();
+          return;
+        }
+        done();
+      }).catch(function() {
+        done();
+      });
+    } else {
+      done();
+    }
+  });
+
+  it('waitActivityReady callback', function *(done) {
+    var adb = new ADB();
+    var devices = yield ADB.getDevices();
+    if (devices.length) {
+      var device = devices[0];
+      adb.setDeviceId(device.udid);
+      adb.waitActivityReady(testApk.package, testApk.activity, (err, data) => {
+        if (err) {
+          console.log(err);
+          done();
+          return;
+        }
+        console.log(data);
+        done();
+      }).catch(function(err) {
+        console.log(err);
+        done();
+      });
+    } else {
+      done();
+    }
+  });
+
+  it('waitActivityReady promise', function *(done) {
+    var adb = new ADB();
+    var devices = yield ADB.getDevices();
+
+    if (devices.length) {
+      var device = devices[0];
+      adb.setDeviceId(device.udid);
+      adb.waitActivityReady(testApk.package, testApk.activity).then((err, data) => {
+        if (err) {
+          console.log(err);
+          done();
+          return;
+        }
+        done();
+      }).catch(function() {
+        done();
+      });
+    } else {
+      done();
+    }
+  });
+
+  it('isScreenLocked callback', function *(done) {
+    var adb = new ADB();
+    var devices = yield ADB.getDevices();
+    if (devices.length) {
+      var device = devices[0];
+      adb.setDeviceId(device.udid);
+      adb.isScreenLocked((err, data) => {
+        if (err) {
+          console.log(err);
+          done();
+          return;
+        }
+        console.log(data);
+        done();
+      }).catch(function(err) {
+        console.log(err);
+        done();
+      });
+    } else {
+      done();
+    }
+  });
+
+  it('isScreenLocked promise', function *(done) {
+    var adb = new ADB();
+    var devices = yield ADB.getDevices();
+
+    if (devices.length) {
+      var device = devices[0];
+      adb.setDeviceId(device.udid);
+      adb.isScreenLocked().then((err, data) => {
+        if (err) {
+          console.log(err);
+          done();
+          return;
+        }
+        done();
+      }).catch(function() {
+        done();
+      });
+    } else {
+      done();
+    }
+  });
+
+  it('isInstalled callback', function *(done) {
+    var adb = new ADB();
+    var devices = yield ADB.getDevices();
+
+    if (devices.length) {
+      var device = devices[0];
+      adb.setDeviceId(device.udid);
+      adb.isInstalled(testApk.package, (err, data) => {
+        if (err) {
+          console.log(err);
+          done();
+          return;
+        }
+        console.log(data);
+        done();
+      }).catch(function(err) {
+        console.log(err);
+        done();
+      });
+    } else {
+      done();
+    }
+  });
+
+  it('isInstalled promise', function *(done) {
+    var adb = new ADB();
+    var devices = yield ADB.getDevices();
+
+    if (devices.length) {
+      var device = devices[0];
+      adb.setDeviceId(device.udid);
+      adb.isInstalled(testApk.package).then((err, data) => {
+        if (err) {
+          console.log(err);
+          done();
+          return;
+        }
+        done();
+      }).catch(function() {
+        done();
+      });
+    } else {
+      done();
+    }
+  });
+
 });

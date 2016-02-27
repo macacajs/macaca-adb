@@ -6,6 +6,7 @@ npm-debug.log
 *.swn
 *.swl
 *.swm
+*.swk
 .sw*
 .idea/*
 Thumbs.db
