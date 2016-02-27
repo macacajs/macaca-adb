@@ -14,7 +14,8 @@
 'use strict';
 
 var ADB = require('..');
-var testApk = require('unlock-apk').apkPath;
+var testApk = require('unlock-apk');
+var testApkPath = testApk.apkPath;
 
 var tmpDir = '/data/local/tmp';
 
@@ -216,7 +217,7 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.install(testApk, (err, data) => {
+      adb.install(testApkPath, (err, data) => {
         if (err) {
           console.log(err);
           done();
@@ -239,7 +240,7 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.install(testApk).then((err, data) => {
+      adb.install(testApkPath).then((err, data) => {
         if (err) {
           console.log(err);
           done();
@@ -568,7 +569,7 @@ describe('macaca-adb.test.js', function() {
   });
 
   it('getApkMainifest callback', function(done) {
-    ADB.getApkMainifest(testApk, function(err, data) {
+    ADB.getApkMainifest(testApkPath, function(err, data) {
       if (err) {
         console.log(err);
         done();
@@ -581,7 +582,7 @@ describe('macaca-adb.test.js', function() {
   });
 
   it('getApkMainifest promise', function(done) {
-    ADB.getApkMainifest(testApk).then(function(data) {
+    ADB.getApkMainifest(testApkPath).then(function(data) {
       data.should.be.a.String;
       console.log(data);
       done();
@@ -637,4 +638,94 @@ describe('macaca-adb.test.js', function() {
       done();
     }
   });
+
+  it('dumpsysWindow callback', function *(done) {
+    var adb = new ADB();
+    var devices = yield ADB.getDevices();
+    if (devices.length) {
+      var device = devices[0];
+      adb.setDeviceId(device.udid);
+      adb.dumpsysWindow((err, data) => {
+        if (err) {
+          console.log(err);
+          done();
+          return;
+        }
+        console.log(data);
+        done();
+      }).catch(function() {
+        done();
+      });
+    } else {
+      done();
+    }
+  });
+
+  it('dumpsysWindow promise', function *(done) {
+    var adb = new ADB();
+    var devices = yield ADB.getDevices();
+
+    if (devices.length) {
+      var device = devices[0];
+      adb.setDeviceId(device.udid);
+      adb.dumpsysWindow().then((err, data) => {
+        if (err) {
+          console.log(err);
+          done();
+          return;
+        }
+        done();
+      }).catch(function() {
+        done();
+      });
+    } else {
+      done();
+    }
+  });
+
+  it('waitActivityReady callback', function *(done) {
+    var adb = new ADB();
+    var devices = yield ADB.getDevices();
+    if (devices.length) {
+      var device = devices[0];
+      adb.setDeviceId(device.udid);
+      adb.waitActivityReady(testApk.package, testApk.activity, (err, data) => {
+        if (err) {
+          console.log(err);
+          done();
+          return;
+        }
+        console.log(data);
+        done();
+      }).catch(function(err) {
+        console.log(err);
+        done();
+      });
+    } else {
+      done();
+    }
+  });
+
+  it('waitActivityReady promise', function *(done) {
+    var adb = new ADB();
+    var devices = yield ADB.getDevices();
+
+    if (devices.length) {
+      var device = devices[0];
+      adb.setDeviceId(device.udid);
+      adb.waitActivityReady(testApk.package, testApk.activity).then((err, data) => {
+        if (err) {
+          console.log(err);
+          done();
+          return;
+        }
+        done();
+      }).catch(function() {
+        done();
+      });
+    } else {
+      done();
+    }
+  });
+
 });
