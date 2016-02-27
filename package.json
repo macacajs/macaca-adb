@@ -1,6 +1,6 @@
 {
   "name": "macaca-adb",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "macaca adb",
   "keywords": [
     "macaca-adb"
@@ -11,7 +11,6 @@
     "url": "git://github.com/macacajs/macaca-adb.git"
   },
   "dependencies": {
-    "co": "^4.6.0",
     "macaca-utils": "^0.1.6",
     "reliable-logger": "~1.0.6"
   },

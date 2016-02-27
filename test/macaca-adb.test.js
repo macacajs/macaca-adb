@@ -728,4 +728,95 @@ describe('macaca-adb.test.js', function() {
     }
   });
 
+  it('isScreenLocked callback', function *(done) {
+    var adb = new ADB();
+    var devices = yield ADB.getDevices();
+    if (devices.length) {
+      var device = devices[0];
+      adb.setDeviceId(device.udid);
+      adb.isScreenLocked((err, data) => {
+        if (err) {
+          console.log(err);
+          done();
+          return;
+        }
+        console.log(data);
+        done();
+      }).catch(function(err) {
+        console.log(err);
+        done();
+      });
+    } else {
+      done();
+    }
+  });
+
+  it('isScreenLocked promise', function *(done) {
+    var adb = new ADB();
+    var devices = yield ADB.getDevices();
+
+    if (devices.length) {
+      var device = devices[0];
+      adb.setDeviceId(device.udid);
+      adb.isScreenLocked().then((err, data) => {
+        if (err) {
+          console.log(err);
+          done();
+          return;
+        }
+        done();
+      }).catch(function() {
+        done();
+      });
+    } else {
+      done();
+    }
+  });
+
+  it('isInstalled callback', function *(done) {
+    var adb = new ADB();
+    var devices = yield ADB.getDevices();
+
+    if (devices.length) {
+      var device = devices[0];
+      adb.setDeviceId(device.udid);
+      adb.isInstalled(testApk.package, (err, data) => {
+        if (err) {
+          console.log(err);
+          done();
+          return;
+        }
+        console.log(data);
+        done();
+      }).catch(function(err) {
+        console.log(err);
+        done();
+      });
+    } else {
+      done();
+    }
+  });
+
+  it('isInstalled promise', function *(done) {
+    var adb = new ADB();
+    var devices = yield ADB.getDevices();
+
+    if (devices.length) {
+      var device = devices[0];
+      adb.setDeviceId(device.udid);
+      adb.isInstalled(testApk.package).then((err, data) => {
+        if (err) {
+          console.log(err);
+          done();
+          return;
+        }
+        done();
+      }).catch(function() {
+        done();
+      });
+    } else {
+      done();
+    }
+  });
+
 });
