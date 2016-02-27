@@ -24,23 +24,6 @@
 ```shell
 $ npm i macaca-adb --save
 ```
-## Documentation
-
-### Proto Methods
-
-push
-
-pull
-
-install
-
-### Static Methods
-
-getVersion
-
-getDevices
-
-getEmulators
 
 ## License
 
