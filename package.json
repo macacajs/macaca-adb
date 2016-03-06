@@ -1,9 +1,9 @@
 {
   "name": "macaca-adb",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "macaca adb",
   "keywords": [
-    "macaca-adb"
+    "adb"
   ],
   "main": "index.js",
   "repository": {
@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "macaca-utils": "^0.1.6",
-    "reliable-logger": "~1.0.6"
+    "xlogger": "~1.0.0"
   },
   "devDependencies": {
     "co-mocha": "~1.1.2",
