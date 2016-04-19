@@ -8,8 +8,7 @@ test: install
 	@node --harmony \
 		${npm_bin}/istanbul cover ${npm_bin}/_mocha \
 		-- \
-		--timeout 10000 \
-		--require co-mocha
+		--timeout 10000
 travis: install
 	@NODE_ENV=test $(BIN) $(FLAGS) \
 		./node_modules/.bin/istanbul cover \
