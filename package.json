@@ -5,7 +5,7 @@
   "keywords": [
     "adb"
   ],
-  "main": "index.js",
+  "main": "./lib/macaca-adb",
   "repository": {
     "type": "git",
     "url": "git://github.com/macacajs/macaca-adb.git"
