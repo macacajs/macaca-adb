@@ -1,0 +1,56 @@
+#!/usr/bin/env node
+
+'use strict';
+
+const co = require('co');
+const fs = require('fs');
+const path = require('path');
+const EOL = require('os').EOL;
+const chalk = require('chalk');
+const update = require('npm-update');
+const program = require('commander');
+const spawn = require('child_process').spawn;
+
+const ADB = require('../');
+const pkg = require('../package');
+const logger = require('../lib/logger');
+
+program
+  .usage('[options] [arguments]')
+  .option('-v, --versions',     'show version and exit')
+  .option('--verbose',          'show more debugging information')
+  .helpInformation = function() {
+    return [
+      '',
+      '  \u001b[37m' + pkg.description + '\u001b[0m',
+      '',
+      '  Usage:',
+      '    ' + this._name + ' or detect-port ' + this.usage(),
+      '',
+      '  Options:',
+      '' + this.optionHelp().replace(/^/gm, '    '),
+      '',
+      '  Further help:',
+      '',
+      '    \u001b[4m' + pkg.homepage + '\u001b[0m',
+      '',
+      ''
+    ].join('\n');
+  };
+
+program.parse(process.argv);
+
+if (program.versions) {
+  console.log('%s version: %s', pkg.name, pkg.version);
+  process.exit(0);
+}
+
+const args = program.args;
+const action = args[0];
+
+switch (action) {
+  case 'install':
+    const apkPath = path.resolve(args[1]);
+    console.log(apkPath);
+    break;
+}
