@@ -17,7 +17,7 @@ program
   .usage('[options] [arguments]')
   .option('-v, --versions',     'show version and exit')
   .option('--verbose',          'show more debugging information')
-  .helpInformation = () => {
+  .helpInformation = function() {
     return [
       '',
       `  \u001b[37m${pkg.description}\u001b[0m`,
