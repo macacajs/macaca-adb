@@ -1,0 +1,87 @@
+#!/usr/bin/env node
+
+'use strict';
+
+const fs = require('fs');
+const path = require('path');
+const EOL = require('os').EOL;
+const update = require('npm-update');
+const program = require('commander');
+
+const ADB = require('../');
+const pkg = require('../package');
+const _ = require('../lib/helper');
+const logger = require('../lib/logger');
+
+program
+  .usage('[options] [arguments]')
+  .option('-v, --versions',     'show version and exit')
+  .option('--verbose',          'show more debugging information')
+  .helpInformation = () => {
+    return [
+      '',
+      `  \u001b[37m${pkg.description}\u001b[0m`,
+      '',
+      '  Usage:',
+      `    ${this._name} ${this.usage()}`,
+      '',
+      '  Options:',
+      '' + this.optionHelp().replace(/^/gm, '    '),
+      '',
+      ''
+    ].join('\n');
+  };
+
+program.parse(process.argv);
+
+if (program.versions) {
+  console.log('%s version: %s', pkg.name, pkg.version);
+  process.exit(0);
+}
+
+const print = (content) => {
+  process.stdout.clearLine();
+  process.stdout.cursorTo(0);
+  process.stdout.write(content);
+};
+
+const args = program.args;
+const action = args[0];
+
+const adb = new ADB();
+
+switch (action) {
+  case 'install':
+    const apkPath = path.resolve(args[1]);
+    const baseName = path.basename(apkPath);
+    const fullSize = fs.statSync(apkPath).size;
+
+    ADB.getDevices()
+      .then(devices => {
+        return devices[0];
+      })
+      .then(device => {
+        adb.setDeviceId(device.udid);
+
+        const timer = setInterval(() => {
+          adb
+            .shell(`ls -l /data/local/tmp/${baseName}`)
+            .then(d => {
+              d = d.match(/\s+\d+\s+/)[0].trim();
+              const rate = parseInt((parseInt(d, 10) / fullSize) * 100, 10);
+              print(`file trans process: ${rate}%`);
+
+              if (rate === 100) {
+                clearInterval(timer);
+                print('file installing...');
+              }
+            });
+        }, 100);
+
+        return adb.install(apkPath);
+      })
+      .then(out => {
+        print(`${out}${EOL}`);
+      });
+    break;
+};

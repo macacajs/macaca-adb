@@ -24,3 +24,10 @@
 ```shell
 $ npm i macaca-adb --save
 ```
+
+## Usage
+
+```shell
+$ npm i macaca-adb -g
+$ macaca-adb -h
+```
