@@ -1,9 +1,10 @@
 {
   "name": "macaca-adb",
   "version": "1.0.22",
-  "description": "macaca adb",
+  "description": "Node.js wrapper for ADB. ",
   "keywords": [
-    "adb"
+    "adb",
+    "macaca"
   ],
   "bin": {
     "macaca-adb": "./bin/macaca-adb"

@@ -17,7 +17,7 @@
 [download-image]: https://img.shields.io/npm/dm/macaca-adb.svg?style=flat-square
 [download-url]: https://npmjs.org/package/macaca-adb
 
-> macaca adb
+> Node.js wrapper for ADB. 
 
 ## Installment
 

@@ -14,8 +14,8 @@ env:
   - ANDROID_HOME=/usr/local/android-sdk
 before_script:
     - . $HOME/.nvm/nvm.sh
-    - nvm install 4
-    - nvm use 4
+    - nvm install 6
+    - nvm use 6
     - npm install
     - adb start-server
 script: "make travis"
