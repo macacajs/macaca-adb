@@ -1,7 +1,9 @@
 'use strict';
 
-var ADB = require('../lib/macaca-adb');
 var testApk = require('unlock-apk');
+
+var ADB = require('../lib/macaca-adb');
+
 var testApkPath = testApk.apkPath;
 
 var tmpDir = '/data/local/tmp';
@@ -22,7 +24,7 @@ describe('macaca-adb.test.js', function() {
   });
 
   it('getVersion promise', function(done) {
-    ADB.getVersion().then(function(data) {
+    ADB.getVersion().then(data => {
       data.should.be.a.String;
       console.log(`version: ${data.match(/\d+.\d+.\d+/)[0]}`);
       done();
@@ -67,7 +69,7 @@ describe('macaca-adb.test.js', function() {
   });
 
   it('getEmulators promise', function(done) {
-    ADB.getEmulators().then(function(data) {
+    ADB.getEmulators().then(data => {
       console.log(data);
       done();
     }).catch(function(err) {
@@ -104,13 +106,12 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.shell('ls').then((err, data) => {
+      adb.shell('ls').then(data => {
         if (err) {
           console.log(err);
-          done();
-          return;
         }
-        console.log(data);
+        done();
+      }).catch(() => {
         done();
       });
     } else {
@@ -145,12 +146,12 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.push('./README.md', tmpDir).then(err => {
-        if (err) {
-          console.log(err);
-          done();
-          return;
+      adb.push('./README.md', tmpDir).then(data => {
+        if (data) {
+          console.log(data);
         }
+        done();
+      }).catch(() => {
         done();
       });
     } else {
@@ -185,12 +186,12 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.pull(`${tmpDir}/README.md`, './test').then(err => {
-        if (err) {
-          console.log(err);
-          done();
-          return;
+      adb.pull(`${tmpDir}/README.md`, './test').then(data => {
+        if (data) {
+          console.log(data);
         }
+        done();
+      }).catch(() => {
         done();
       });
     } else {
@@ -227,14 +228,12 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.install(testApkPath).then(err => {
-        if (err) {
-          console.log(err);
-          done();
-          return;
+      adb.install(testApkPath).then(data => {
+        if (data) {
+          console.log(data);
         }
         done();
-      }).catch(function() {
+      }).catch(() => {
         done();
       });
     } else {
@@ -271,14 +270,12 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.forceStop('xdf.android_unlock').then(err => {
-        if (err) {
-          console.log(err);
-          done();
-          return;
+      adb.forceStop('xdf.android_unlock').then(data => {
+        if (data) {
+          console.log(data);
         }
         done();
-      }).catch(function() {
+      }).catch(() => {
         done();
       });
     } else {
@@ -315,14 +312,12 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.clear('xdf.android_unlock').then(err => {
-        if (err) {
-          console.log(err);
-          done();
-          return;
+      adb.clear('xdf.android_unlock').then(data => {
+        if (data) {
+          console.log(data);
         }
         done();
-      }).catch(function() {
+      }).catch(() => {
         done();
       });
     } else {
@@ -359,14 +354,12 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.unInstall('xdf.android_unlock').then(err => {
-        if (err) {
-          console.log(err);
-          done();
-          return;
+      adb.unInstall('xdf.android_unlock').then(data => {
+        if (data) {
+          console.log(data);
         }
         done();
-      }).catch(function() {
+      }).catch(() => {
         done();
       });
     } else {
@@ -403,14 +396,12 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.input('xxxxxxx').then(err => {
-        if (err) {
-          console.log(err);
-          done();
-          return;
+      adb.input('xxxxxxx').then(data => {
+        if (data) {
+          console.log(data);
         }
         done();
-      }).catch(function() {
+      }).catch(() => {
         done();
       });
     } else {
@@ -447,14 +438,12 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.goBack().then(err => {
-        if (err) {
-          console.log(err);
-          done();
-          return;
+      adb.goBack().then(data => {
+        if (data) {
+          console.log(data);
         }
         done();
-      }).catch(function() {
+      }).catch(() => {
         done();
       });
     } else {
@@ -491,14 +480,12 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.getApiLevel().then(err => {
-        if (err) {
-          console.log(err);
-          done();
-          return;
+      adb.getApiLevel().then(data => {
+        if (data) {
+          console.log(data);
         }
         done();
-      }).catch(function() {
+      }).catch(() => {
         done();
       });
     } else {
@@ -511,7 +498,7 @@ describe('macaca-adb.test.js', function() {
     activity: 'com.android.browser.BrowserActivity'
   };
 
-  it('startApp callback', function *(done) {
+  it('startApp callback', function *() {
     var adb = new ADB();
     var devices = yield ADB.getDevices();
     if (devices.length) {
@@ -520,16 +507,10 @@ describe('macaca-adb.test.js', function() {
       adb.startApp(startAppOpts ,(err, data) => {
         if (err) {
           console.log(err);
-          done();
-          return;
+        } else {
+          console.log(data);
         }
-        console.log(data);
-        done();
-      }).catch(function() {
-        done();
       });
-    } else {
-      done();
     }
   });
 
@@ -540,14 +521,12 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.startApp(startAppOpts).then(err => {
-        if (err) {
-          console.log(err);
-          done();
-          return;
+      adb.startApp(startAppOpts).then(data => {
+        if (data) {
+          console.log(data);
         }
         done();
-      }).catch(function() {
+      }).catch(() => {
         done();
       });
     } else {
@@ -569,11 +548,13 @@ describe('macaca-adb.test.js', function() {
   });
 
   it('getApkMainifest promise', function(done) {
-    ADB.getApkMainifest(testApkPath).then(function(data) {
-      data.should.be.a.String;
-      console.log(data);
+    ADB.getApkMainifest(testApkPath).then(data => {
+      if (data) {
+        data.should.be.a.String;
+        console.log(data);
+      }
       done();
-    }).catch(function(err) {
+    }).catch(err => {
       console.log(err);
       done();
     });
@@ -611,11 +592,9 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.killProcess(processName).then(err => {
-        if (err) {
-          console.log(err);
-          done();
-          return;
+      adb.killProcess(processName).then(data => {
+        if (data) {
+          console.log(data);
         }
         done();
       }).catch(function() {
@@ -655,14 +634,12 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.dumpsysWindow().then(err => {
-        if (err) {
-          console.log(err);
-          done();
-          return;
+      adb.dumpsysWindow().then(data => {
+        if (data) {
+          console.log(data);
         }
         done();
-      }).catch(function() {
+      }).catch(() => {
         done();
       });
     } else {
@@ -670,7 +647,7 @@ describe('macaca-adb.test.js', function() {
     }
   });
 
-  it('waitActivityReady callback', function *(done) {
+  it('waitActivityReady callback', function *() {
     var adb = new ADB();
     var devices = yield ADB.getDevices();
     if (devices.length) {
@@ -679,13 +656,9 @@ describe('macaca-adb.test.js', function() {
       adb.waitActivityReady(testApk.package, testApk.activity, (err, data) => {
         if (err) {
           console.log(err);
-          done();
-          return;
+        } else {
+          console.log(data);
         }
-        console.log(data);
-        done();
-      }).catch(function(err) {
-        console.log(err);
         done();
       });
     } else {
@@ -693,25 +666,21 @@ describe('macaca-adb.test.js', function() {
     }
   });
 
-  it('waitActivityReady promise', function *(done) {
+  it('waitActivityReady promise', function *() {
     var adb = new ADB();
     var devices = yield ADB.getDevices();
 
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.waitActivityReady(testApk.package, testApk.activity).then(err => {
-        if (err) {
-          console.log(err);
-          done();
-          return;
+      adb.waitActivityReady(testApk.package, testApk.activity).then(data => {
+        if (data) {
+          console.log(data);
         }
         done();
-      }).catch(function() {
+      }).catch(() => {
         done();
       });
-    } else {
-      done();
     }
   });
 
@@ -745,14 +714,12 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.isScreenLocked().then(err => {
-        if (err) {
-          console.log(err);
-          done();
-          return;
+      adb.isScreenLocked().then(data => {
+        if (data) {
+          console.log(data);
         }
         done();
-      }).catch(function() {
+      }).catch(() => {
         done();
       });
     } else {
@@ -775,9 +742,6 @@ describe('macaca-adb.test.js', function() {
         }
         console.log(data);
         done();
-      }).catch(function(err) {
-        console.log(err);
-        done();
       });
     } else {
       done();
@@ -791,11 +755,29 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.isInstalled(testApk.package).then(err => {
-        if (err) {
-          console.log(err);
-          done();
-          return;
+      adb.isInstalled(testApk.package).then(data => {
+        if (data) {
+          console.log(data);
+        }
+        done();
+      }).catch(() => {
+        done();
+      });
+    } else {
+      done();
+    }
+  });
+
+  it('getFocusedActivity promise', function *(done) {
+    var adb = new ADB();
+    var devices = yield ADB.getDevices();
+
+    if (devices.length) {
+      var device = devices[0];
+      adb.setDeviceId(device.udid);
+      adb.getFocusedActivity().then(data => {
+        if (data) {
+          console.log(data);
         }
         done();
       }).catch(function() {
