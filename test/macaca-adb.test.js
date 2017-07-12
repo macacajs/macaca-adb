@@ -107,9 +107,7 @@ describe('macaca-adb.test.js', function() {
       var device = devices[0];
       adb.setDeviceId(device.udid);
       adb.shell('ls').then(data => {
-        if (err) {
-          console.log(err);
-        }
+        console.log(data);
         done();
       }).catch(() => {
         done();
