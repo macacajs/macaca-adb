@@ -647,7 +647,7 @@ describe('macaca-adb.test.js', function() {
     }
   });
 
-  it('waitActivityReady callback', function *() {
+  it('waitActivityReady callback', function *(done) {
     var adb = new ADB();
     var devices = yield ADB.getDevices();
     if (devices.length) {
@@ -666,7 +666,7 @@ describe('macaca-adb.test.js', function() {
     }
   });
 
-  it('waitActivityReady promise', function *() {
+  it('waitActivityReady promise', function *(done) {
     var adb = new ADB();
     var devices = yield ADB.getDevices();
 
@@ -681,6 +681,8 @@ describe('macaca-adb.test.js', function() {
       }).catch(() => {
         done();
       });
+    }else{
+      done();
     }
   });
 
