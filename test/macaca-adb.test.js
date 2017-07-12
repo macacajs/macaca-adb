@@ -681,6 +681,8 @@ describe('macaca-adb.test.js', function() {
       }).catch(() => {
         done();
       });
+    }else{
+      done();
     }
   });
 
