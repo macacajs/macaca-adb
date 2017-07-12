@@ -9,7 +9,7 @@ test: install
 		${npm_bin}/istanbul cover ${npm_bin}/_mocha \
 		-- \
 		--timeout 10000
-travis: install
+travis: install jshint
 	@NODE_ENV=test $(BIN) $(FLAGS) \
 		./node_modules/.bin/istanbul cover \
 		./node_modules/.bin/_mocha \

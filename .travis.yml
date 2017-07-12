@@ -18,5 +18,7 @@ before_script:
     - nvm use 6
     - npm install
     - adb start-server
-script: "make travis"
-after_script: "npm install coveralls@2 && cat ./coverage/lcov.info | coveralls"
+script:
+  - make travis
+after_script:
+  - npm install coveralls@2 && cat ./coverage/lcov.info | coveralls
