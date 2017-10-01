@@ -10,6 +10,8 @@ var tmpDir = '/data/local/tmp';
 
 describe('macaca-adb.test.js', function() {
 
+  this.timeout(6 * 10 * 1000);
+
   it('getVersion callback', function(done) {
     ADB.getVersion(function(err, data) {
       if (err) {
@@ -85,7 +87,7 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.shell('ls', (err, data) => {
+      adb.shell('echo hello', (err, data) => {
         if (err) {
           console.log(err);
           done();
@@ -106,7 +108,7 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.shell('ls').then(data => {
+      adb.shell('echo hello').then(data => {
         console.log(data);
         done();
       }).catch(() => {
@@ -203,17 +205,16 @@ describe('macaca-adb.test.js', function() {
     if (devices.length) {
       var device = devices[0];
       adb.setDeviceId(device.udid);
-      adb.install(testApkPath, (err, data) => {
-        if (err) {
-          console.log(err);
+      adb.install(testApkPath)
+        .then((err, data) => {
+          if (err) {
+            done();
+            return;
+          }
           done();
-          return;
-        }
-        console.log(data);
-        done();
-      }).catch(function() {
-        done();
-      });
+        }).catch(function() {
+          done();
+        });
     } else {
       done();
     }
