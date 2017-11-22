@@ -21,13 +21,13 @@
 
 ## Installment
 
-```shell
+```bash
 $ npm i macaca-adb --save
 ```
 
 ## Usage
 
-```shell
+```bash
 $ npm i macaca-adb -g
 $ macaca-adb -h
 ```
