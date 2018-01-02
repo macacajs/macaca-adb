@@ -14,11 +14,12 @@ env:
   - ANDROID_HOME=/usr/local/android-sdk
 before_script:
     - . $HOME/.nvm/nvm.sh
-    - nvm install 6
-    - nvm use 6
+    - nvm install 8
+    - nvm use 8
     - npm install
     - adb start-server
 script:
-  - make travis
+  - npm i
+  - npm run ci
 after_script:
   - npm install coveralls@2 && cat ./coverage/lcov.info | coveralls
