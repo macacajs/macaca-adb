@@ -1,6 +1,6 @@
 {
   "name": "macaca-adb",
-  "version": "1.0.33",
+  "version": "1.0.34",
   "description": "Node.js wrapper for ADB.",
   "keywords": [
     "adb",
