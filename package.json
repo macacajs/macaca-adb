@@ -27,15 +27,15 @@
     "eslint": "^4.14.0",
     "eslint-plugin-mocha": "^4.11.0",
     "git-contributor": "^1.0.8",
-    "istanbul": "*",
     "mocha": "^4.1.0",
+    "nyc": "^11.8.0",
     "pre-commit": "*",
     "should": "~8.0.2",
-    "unlock-apk": "^0.1.10"
+    "unlock-apk": "^1.0.8"
   },
   "scripts": {
     "ci": "npm run lint && npm run test",
-    "test": "istanbul cover `npm bin`/_mocha",
+    "test": "nyc --reporter=lcov --reporter=text mocha",
     "lint": "eslint --fix lib test",
     "contributor": "git-contributor"
   },
